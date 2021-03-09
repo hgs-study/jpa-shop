@@ -13,6 +13,8 @@ public class Order {
     @Column(name="MEMBER_ID")
     private Long memberId;
 
+    @ManyToOne
+    @JoinColumn("MEMBER_ID")
     private Member member;
 
 
