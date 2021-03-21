@@ -1,9 +1,6 @@
 package domain_test;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Member {
@@ -13,6 +10,9 @@ public class Member {
     private Long id;
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
     public Long getId() {
         return id;
@@ -29,4 +29,14 @@ public class Member {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Team getTeam() {
+        return team;
+    }
+    // setTeam은 getter/setter 메서드 관례때문에 change로 사용
+    public void changeTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
+    }
+
 }
