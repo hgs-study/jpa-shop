@@ -1,6 +1,7 @@
 import domain.Member;
 import domain.Order;
 import domain.OrderItem;
+import highClassMapping.Movie;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,13 +28,20 @@ public class JPAMain {
             //나중에 JPQL로 조인을 더 복잡하게 해야하는데 이 작업을 더 간단히 하기위해 양방향으로 많이 짠다.
             //핵심은 단방향으로 할 수 있으면 최대한 단방향으로 해라!
             //하지만 실무를 하다보면 조회를 간단히 하기 위해 양방향으로 하기 위한 작업이 많아진다.
-            Order order = new Order();
-            em.persist(order);
+//            Order order = new Order();
+//            em.persist(order);
+//
+//            OrderItem orderItem = new OrderItem();
+//            orderItem.setOrder(order);
+//            em.persist(orderItem);
 
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(order);
-            em.persist(orderItem);
+            Movie movie = new Movie();
+            movie.setDirector("director");
+            movie.setActor("Actor");
+            movie.setName("바람과 함께 사라지다");
+            movie.setPrice(10000);
 
+            em.persist(movie);
 
             tx.commit();
         }catch (Exception e){
