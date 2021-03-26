@@ -1,5 +1,7 @@
 package domain;
 
+import Common.BaseEntity;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name="ORDERS")
-public class Order {
+public class Order extends BaseEntity {
     @Id @GeneratedValue
     @Column(name="ORDER_ID")
     private Long id;

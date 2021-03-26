@@ -1,6 +1,7 @@
 import domain.Member;
 import domain.Order;
 import domain.OrderItem;
+import highClassMapping.Book;
 import highClassMapping.Movie;
 
 import javax.persistence.EntityManager;
@@ -17,31 +18,12 @@ public class JPAMain {
 
         tx.begin();
         try{
-            //방법 1 (양방향 연관관계)
-            //Order order = new Order();
-            //order.addOrderItem(new OrderItem());
+            Book book = new Book();
+            book.setName("jpa");
+            book.setAuthor("현건수");
 
 
-            //방법 2 (단방향 연관관계)
-            //단방향 연관관계로도 애플리케이션을 만드는데에 지장이 없다.
-            //양방향 연관관계로 하는 이유는 조회를 더 편하게 하기 위해서
-            //나중에 JPQL로 조인을 더 복잡하게 해야하는데 이 작업을 더 간단히 하기위해 양방향으로 많이 짠다.
-            //핵심은 단방향으로 할 수 있으면 최대한 단방향으로 해라!
-            //하지만 실무를 하다보면 조회를 간단히 하기 위해 양방향으로 하기 위한 작업이 많아진다.
-//            Order order = new Order();
-//            em.persist(order);
-//
-//            OrderItem orderItem = new OrderItem();
-//            orderItem.setOrder(order);
-//            em.persist(orderItem);
-
-            Movie movie = new Movie();
-            movie.setDirector("director");
-            movie.setActor("Actor");
-            movie.setName("바람과 함께 사라지다");
-            movie.setPrice(10000);
-
-            em.persist(movie);
+            em.persist(book);
 
             tx.commit();
         }catch (Exception e){

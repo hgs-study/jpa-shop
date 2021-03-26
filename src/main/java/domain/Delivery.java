@@ -1,12 +1,14 @@
 package domain;
 
+import Common.BaseEntity;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Delivery {
+public class Delivery extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;
