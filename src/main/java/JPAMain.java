@@ -30,7 +30,6 @@ public class JPAMain {
             //reference2.getName(); //사실 강제 초기화
             System.out.println("프록시 초기화 확인 :"+ emf.getPersistenceUnitUtil().isLoaded(reference2));
             System.out.println("프록시 클래스 확인 :"+ reference2.getClass());
-            //Hibernate.initialize(reference2);
             System.out.println("프록시 강제 초기화 : Hibernate.initialize(reference2)");
 
 
