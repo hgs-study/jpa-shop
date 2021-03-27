@@ -23,10 +23,11 @@ public class JPAMain {
 
 
 //            Member findMember = em.find(Member.class, member.getId());
-            Member findMember = em.getReference(Member.class,member.getId()); //프록시 클래스
+            Member findMember = em.getReference(Member.class,member.getId()); //프록시 클래스 (하이버네이트 사용)
             System.out.println("findMember : "+findMember.getClass()); // findMember : class domain_test.Member$HibernateProxy$Sg3az2nX
-            System.out.println("findMember.id :" + findMember.getId());
-            System.out.println("findMember.name : " + findMember.getName());
+//            System.out.println("findMember.id :" + findMember.getId());
+            System.out.println("findMember.name 11: " + findMember.getName());
+            System.out.println("findMember.name 22: " + findMember.getName()); // 프록시 target에 엔티티가 할당되어 있으니 다시 select문 안나감
 
             tx.commit();
         }catch (Exception e){
