@@ -1,8 +1,4 @@
-import domain.Member;
-import domain.Order;
-import domain.OrderItem;
-import highClassMapping.Book;
-import highClassMapping.Movie;
+import domain_test.Member;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,12 +14,17 @@ public class JPAMain {
 
         tx.begin();
         try{
-            Book book = new Book();
-            book.setName("jpa");
-            book.setAuthor("현건수");
+            Member member =  new Member();
+            member.setName("현건수");
+
+            em.persist(member);
+            em.flush();
+            em.clear();
 
 
-            em.persist(book);
+            Member findMember = em.find(Member.class, member.getId());
+            System.out.println("findMember.id :" + findMember.getId());
+            System.out.println("findMember.name : " + findMember.getName());
 
             tx.commit();
         }catch (Exception e){
@@ -32,6 +33,10 @@ public class JPAMain {
             em.close();
         }
         emf.close();
+    }
+
+    private static void printMember(Member member) {
+        System.out.println(member.getName());
     }
 
 }
