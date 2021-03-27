@@ -24,17 +24,14 @@ public class JPAMain {
             Member reference2 = em.getReference(Member.class,member.getId());
             System.out.println("reference2 : "+ reference2.getClass());
 
-
-            Member findMember = em.find(Member.class, member.getId());
-            //Member findMember = em.getReference(Member.class,member.getId()); //프록시 클래스 (하이버네이트 사용)
-            System.out.println("findMember : "+findMember.getClass()); // findMember : class domain_test.Member$HibernateProxy$Sg3az2nX
-
-            Member reference = em.getReference(Member.class,member.getId());
-            System.out.println("reference : "+ reference.getClass());
+            em.detach(reference2);
+            //em.close();
+            reference2.getName();
 
             tx.commit();
         }catch (Exception e){
             tx.rollback();
+            e.printStackTrace();
         }finally {
             em.close();
         }
