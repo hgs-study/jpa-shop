@@ -22,7 +22,9 @@ public class JPAMain {
             em.clear();
 
 
-            Member findMember = em.find(Member.class, member.getId());
+//            Member findMember = em.find(Member.class, member.getId());
+            Member findMember = em.getReference(Member.class,member.getId()); //프록시 클래스
+            System.out.println("findMember : "+findMember.getClass()); // findMember : class domain_test.Member$HibernateProxy$Sg3az2nX
             System.out.println("findMember.id :" + findMember.getId());
             System.out.println("findMember.name : " + findMember.getName());
 
