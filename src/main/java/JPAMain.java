@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class JPAMain {
 
@@ -28,12 +29,13 @@ public class JPAMain {
 
             em.flush();
             em.clear();
+            //Member m = em.find(Member.class,member.getId()); //JPA가 PK를 찾아서 최적화를 할 수 있다
 
-            Member m = em.find(Member.class,member.getId()); // 지연로딩 때문에 Team은 조인 안하고 MEMBER만 조회
-            System.out.println(m.getTeam().getClass());
-            System.out.println("============");
-            System.out.println(m.getTeam().getName());
-            System.out.println("============");
+            //JPQL은 쿼리문을 그대로 SQL로 번역이 된다. 따라서 MEMBER만 셀렉트되고 EAGER이기 때문에 TEAM도 셀렉트함
+            //따라서 MEMBER 조회 1번 TEAM 조회 1번 => 총 2번 셀렉트문이 나감
+            //N + 1 이란 조인된 TEAM N개  + 최초 쿼리 MEMBER 1개
+            List<Member> members = em.createQuery("select m from Member m ", Member.class)
+                    .getResultList();
 
 
             tx.commit();
