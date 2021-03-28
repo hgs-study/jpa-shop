@@ -1,3 +1,5 @@
+import Cascade.Child;
+import Cascade.Parent;
 import domain_test.Member;
 import domain_test.Team;
 import org.hibernate.Hibernate;
@@ -17,26 +19,17 @@ public class JPAMain {
 
         tx.begin();
         try{
-            Team team = new Team();
-            team.setName("teamA");
-            em.persist(team);
 
-            Member member =  new Member();
-            member.setName("현건수");
-            member.setTeam(team);
-            em.persist(member);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-            em.flush();
-            em.clear();
-            //Member m = em.find(Member.class,member.getId()); //JPA가 PK를 찾아서 최적화를 할 수 있다
-
-            //JPQL은 쿼리문을 그대로 SQL로 번역이 된다. 따라서 MEMBER만 셀렉트되고 EAGER이기 때문에 TEAM도 셀렉트함
-            //따라서 MEMBER 조회 1번 TEAM 조회 1번 => 총 2번 셀렉트문이 나감
-            //N + 1 이란 조인된 TEAM N개  + 최초 쿼리 MEMBER 1개
-            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class)
-                    .getResultList();
-
+            em.persist(parent);
+//            em.persist(child1);
+//            em.persist(child2);
 
             tx.commit();
         }catch (Exception e){
