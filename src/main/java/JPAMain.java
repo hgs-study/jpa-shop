@@ -1,4 +1,5 @@
 import domain_test.Member;
+import domain_test.Team;
 import org.hibernate.Hibernate;
 
 import javax.persistence.EntityManager;
@@ -15,23 +16,24 @@ public class JPAMain {
 
         tx.begin();
         try{
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
             Member member =  new Member();
             member.setName("현건수");
-
+            member.setTeam(team);
             em.persist(member);
+
+
             em.flush();
             em.clear();
 
-            Member reference2 = em.getReference(Member.class,member.getId());
-            System.out.println("reference2 : "+ reference2.getClass());
-
-
-            Hibernate.initialize(reference2);
-            //reference2.getName(); //사실 강제 초기화
-            System.out.println("프록시 초기화 확인 :"+ emf.getPersistenceUnitUtil().isLoaded(reference2));
-            System.out.println("프록시 클래스 확인 :"+ reference2.getClass());
-            System.out.println("프록시 강제 초기화 : Hibernate.initialize(reference2)");
-
+            Member m = em.find(Member.class,member.getId()); // 지연로딩 때문에 Team은 조인 안하고 MEMBER만 조회
+            System.out.println(m.getTeam().getClass());
+            System.out.println("============");
+            System.out.println(m.getTeam().getName());
+            System.out.println("============");
 
 
             tx.commit();
