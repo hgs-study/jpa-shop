@@ -34,7 +34,7 @@ public class JPAMain {
             //JPQL은 쿼리문을 그대로 SQL로 번역이 된다. 따라서 MEMBER만 셀렉트되고 EAGER이기 때문에 TEAM도 셀렉트함
             //따라서 MEMBER 조회 1번 TEAM 조회 1번 => 총 2번 셀렉트문이 나감
             //N + 1 이란 조인된 TEAM N개  + 최초 쿼리 MEMBER 1개
-            List<Member> members = em.createQuery("select m from Member m ", Member.class)
+            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class)
                     .getResultList();
 
 
