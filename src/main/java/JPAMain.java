@@ -1,5 +1,8 @@
 import Cascade.Child;
 import Cascade.Parent;
+import Embeded.Address;
+import Embeded.Period;
+import Embeded.User;
 import domain_test.Member;
 import domain_test.Team;
 import org.hibernate.Hibernate;
@@ -20,20 +23,12 @@ public class JPAMain {
         tx.begin();
         try{
 
-            Child child1 = new Child();
-            Child child2 = new Child();
+            User user =new User();
+            user.setName("현건수");
+            user.setHomeAddress(new Address("city","street","zipCode"));
+            user.setWorkPeriod(new Period());
 
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
-
-            em.persist(parent);
-            em.flush();
-            em.clear();
-
-            Parent findParent = em.find(Parent.class, parent.getId());
-            em.remove(findParent);
-
+            em.persist(user);
             tx.commit();
         }catch (Exception e){
             tx.rollback();
