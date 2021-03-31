@@ -32,11 +32,15 @@ public class User {
     @Column(name="FOOD_NAME") //String은 값이 하나고 내가 정의한게 아니기 때문에 얘는 매핑하게 허용하게 해줌 , Address인 경우는 값이 있고, attribute 사용 가능
     private Set<String> favoriteFoods = new HashSet<>();
 
-    @ElementCollection
-    @CollectionTable(name = "ADDRESS",
-        joinColumns = @JoinColumn(name="USER_ID") //USER_ID를 외래키로 갖게됨
-    )
-    private List<Address> addressHistory = new ArrayList<>();
+//    @ElementCollection
+//    @CollectionTable(name = "ADDRESS",
+//        joinColumns = @JoinColumn(name="USER_ID") //USER_ID를 외래키로 갖게됨
+//    )
+//    private List<Address> addressHistory = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "USER_ID")
+    private List<AddressEntity> addressHistory = new ArrayList<>();
 
 //    @Embedded
 //    @AttributeOverrides({
@@ -87,11 +91,11 @@ public class User {
         this.favoriteFoods = favoriteFoods;
     }
 
-    public List<Address> getAddressHistory() {
+    public List<AddressEntity> getAddressHistory() {
         return addressHistory;
     }
 
-    public void setAddressHistory(List<Address> addressHistory) {
+    public void setAddressHistory(List<AddressEntity> addressHistory) {
         this.addressHistory = addressHistory;
     }
 }
