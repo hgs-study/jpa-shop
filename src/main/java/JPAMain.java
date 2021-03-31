@@ -35,6 +35,18 @@ public class JPAMain {
             user.getAddressHistory().add(new Address("old2","street2","zipcode2"));
 
             em.persist(user); //user를 persist 하면 컬렉션은 다른 테이블인데도 불구하고 같은 라이프 사이클을 가짐
+
+            em.flush();
+            em.clear();
+
+            //조회
+            System.out.println("=======================");
+            User findUser = em.find(User.class, user.getId());
+            System.out.println("조회 :"+findUser);
+
+            List<Address> addressHistory = findUser.getAddressHistory();
+            addressHistory.forEach(i -> System.out.println(i.getCity())); //지연로딩 확인 가능
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();
