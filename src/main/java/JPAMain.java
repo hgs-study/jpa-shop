@@ -22,7 +22,7 @@ public class JPAMain {
 
         tx.begin();
         try{
-
+            //값 타입 저장
             User user = new User();
             user.setName("현건수");
             user.setHomeAddress(new Address("homeCity","street","zipcode"));
@@ -39,7 +39,7 @@ public class JPAMain {
             em.flush();
             em.clear();
 
-            //조회
+            //값 타입 조회
             System.out.println("=======================");
             User findUser = em.find(User.class, user.getId());
             System.out.println("조회 :"+findUser);
@@ -47,7 +47,19 @@ public class JPAMain {
             List<Address> addressHistory = findUser.getAddressHistory();
             addressHistory.forEach(i -> System.out.println(i.getCity())); //지연로딩 확인 가능
 
-            tx.commit();
+            //값 타입 수정 (setCity,setStreet,setZipCode로 변경하면 전체 참조하는 게 다 바뀜) 해결: 새로운 객체를 넣어야한다.
+            System.out.println("=======================");
+            Address homeAddress = findUser.getHomeAddress();
+            findUser.setHomeAddress(new Address("newCity",homeAddress.getStreet(), homeAddress.getZipCode()));
+
+            findUser.getFavoriteFoods().remove("족발");
+            findUser.getFavoriteFoods().add("한식");
+
+            //Address entity에서 equals를 제대로 override해야한다. 안그럼 망한다!!!! 중요!!!!★★★
+            findUser.getAddressHistory().remove(new Address("old1","street1","zipcode1"));
+            findUser.getAddressHistory().add(new Address("newCity1","street","zipcode"));
+
+           tx.commit();
         }catch (Exception e){
             tx.rollback();
             e.printStackTrace();
