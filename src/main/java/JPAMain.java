@@ -23,12 +23,18 @@ public class JPAMain {
         tx.begin();
         try{
 
-            User user =new User();
+            User user = new User();
             user.setName("현건수");
-            user.setHomeAddress(new Address("city","street","zipCode"));
-            user.setWorkPeriod(new Period());
+            user.setHomeAddress(new Address("homeCity","street","zipcode"));
 
-            em.persist(user);
+            user.getFavoriteFoods().add("치킨"); //insert문 나감
+            user.getFavoriteFoods().add("족발"); //insert문 나감
+            user.getFavoriteFoods().add("피자"); //insert문 나감 -> insert 총 3개 나감
+
+            user.getAddressHistory().add(new Address("old1","street1","zipcode1"));
+            user.getAddressHistory().add(new Address("old2","street2","zipcode2"));
+
+            em.persist(user); //user를 persist 하면 컬렉션은 다른 테이블인데도 불구하고 같은 라이프 사이클을 가짐
             tx.commit();
         }catch (Exception e){
             tx.rollback();

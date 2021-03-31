@@ -2,6 +2,10 @@ package Embeded;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -21,13 +25,26 @@ public class User {
     @Embedded
     private Address homeAddress;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "city", column =@Column(name="WORK_CITY")),
-            @AttributeOverride(name = "street", column =@Column(name="WORK_STREET")),
-            @AttributeOverride(name = "zipCode", column =@Column(name="WORK_ZIPCODE"))
-    })
-    private Address workAddress;
+    @ElementCollection
+    @CollectionTable(name = "FAVORITE_FOOD",
+            joinColumns = @JoinColumn(name = "USER_ID") //USER_ID를 외래키로 갖게됨
+    )
+    @Column(name="FOOD_NAME") //String은 값이 하나고 내가 정의한게 아니기 때문에 얘는 매핑하게 허용하게 해줌 , Address인 경우는 값이 있고, attribute 사용 가능
+    private Set<String> favoriteFoods = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "ADDRESS",
+        joinColumns = @JoinColumn(name="USER_ID") //USER_ID를 외래키로 갖게됨
+    )
+    private List<Address> addressHistory = new ArrayList<>();
+
+//    @Embedded
+//    @AttributeOverrides({
+//            @AttributeOverride(name = "city", column =@Column(name="WORK_CITY")),
+//            @AttributeOverride(name = "street", column =@Column(name="WORK_STREET")),
+//            @AttributeOverride(name = "zipCode", column =@Column(name="WORK_ZIPCODE"))
+//    })
+//    private Address workAddress;
 
 
     public Long getId() {
@@ -60,5 +77,21 @@ public class User {
 
     public void setHomeAddress(Address homeAddress) {
         this.homeAddress = homeAddress;
+    }
+
+    public Set<String> getFavoriteFoods() {
+        return favoriteFoods;
+    }
+
+    public void setFavoriteFoods(Set<String> favoriteFoods) {
+        this.favoriteFoods = favoriteFoods;
+    }
+
+    public List<Address> getAddressHistory() {
+        return addressHistory;
+    }
+
+    public void setAddressHistory(List<Address> addressHistory) {
+        this.addressHistory = addressHistory;
     }
 }
