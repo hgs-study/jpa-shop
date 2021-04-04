@@ -1,18 +1,11 @@
-import Cascade.Child;
-import Cascade.Parent;
-import Embeded.Address;
+import Embeded.AddressEM;
 import Embeded.AddressEntity;
-import Embeded.Period;
 import Embeded.User;
-import domain_test.Member;
-import domain_test.Team;
-import org.hibernate.Hibernate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JPAMain {
 
@@ -26,7 +19,7 @@ public class JPAMain {
             //값 타입 저장
             User user = new User();
             user.setName("현건수");
-            user.setHomeAddress(new Address("homeCity","street","zipcode"));
+            user.setHomeAddress(new AddressEM("homeCity","street","zipcode"));
 
             user.getFavoriteFoods().add("치킨"); //insert문 나감
             user.getFavoriteFoods().add("족발"); //insert문 나감

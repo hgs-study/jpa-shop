@@ -1,7 +1,6 @@
 package Embeded;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +22,7 @@ public class User {
     private Period workPeriod;
     //주소
     @Embedded
-    private Address homeAddress;
+    private AddressEM homeAddress;
 
     @ElementCollection
     @CollectionTable(name = "FAVORITE_FOOD",
@@ -75,11 +74,11 @@ public class User {
         this.workPeriod = workPeriod;
     }
 
-    public Address getHomeAddress() {
+    public AddressEM getHomeAddress() {
         return homeAddress;
     }
 
-    public void setHomeAddress(Address homeAddress) {
+    public void setHomeAddress(AddressEM homeAddress) {
         this.homeAddress = homeAddress;
     }
 

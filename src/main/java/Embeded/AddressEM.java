@@ -6,17 +6,17 @@ import javax.persistence.Embeddable;
 import java.util.Objects;
 
 @Embeddable
-public class Address {
+public class AddressEM {
     private String city;
     private String street;
     @Column(name="ZIP_CODE")
     private String zipCode;
 
-    public  Address(){
+    public AddressEM(){
 
     }
 
-    public Address(String city, String street, String zipCode) {
+    public AddressEM(String city, String street, String zipCode) {
         this.city = city;
         this.street = street;
         this.zipCode = zipCode;
@@ -51,7 +51,7 @@ public class Address {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
+        AddressEM address = (AddressEM) o;
         return Objects.equals(city, address.city) &&
                 Objects.equals(street, address.street) &&
                 Objects.equals(zipCode, address.zipCode);
